@@ -8,6 +8,22 @@ import subprocess
 from datetime import datetime, timedelta
 from enum import Enum
 
+import pickle # to work with binary files
+
+def remember_me(data: dict, path:str):
+    with open(path, 'bw') as file:
+        pickle.dump(data, file,)
+
+    # file = open(path, 'bw')
+    # pickle.dump(data, file, )
+    # file.close()
+
+def get_me(path:str):
+    if os.path.exists(path):
+        with open(path, 'br') as file:
+            data = pickle.load(file,)
+        return data.copy()
+    return False
 
 def sort_dict_keys_with_symbols(data: dict):
     # Extract and group keys based on the same grouping logic

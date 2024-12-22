@@ -1,4 +1,11 @@
 {
+  "email": {
+    "username": "yazeed.hasan.97@gmail.com",
+    "password": "hvvilcxpmfrjqgov",
+    "server": "smtp.gmail.com",
+    "port": 587,
+    "default_sender": null
+  },
   "audit": {
     "delicate": "postgresql",
     "database": "postgres",

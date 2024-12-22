@@ -15,33 +15,34 @@ except ImportError:
 from models import utils
 
 BASE = declarative_base(cls=utils.Model)
-SCHEMA = 'public'  # Define schema name for all tables
+SCHEMA = 'bike_store'  # Define schema name for all tables
 
-ANIMALS_TYPES_ENUM = Enum(AnimalsType, name='AnimalsTypesEnum', schema=SCHEMA, create_type=True)
+# ANIMALS_TYPES_ENUM = Enum(AnimalsType, name='AnimalsTypesEnum', schema=SCHEMA, create_type=True)
 
 
-class Animal(BASE):
-    __tablename__ = 'animals'  # Single table for both Feed and BlazeFeed
+class User(BASE):
+    __tablename__ = 'users'  # Single table for both Feed and BlazeFeed
     __table_args__ = (
         Index(
-            'idx_lineages',
-            'name', 'dob', 'type',
+            'idx_users',
+            'email', 'password',
         ),
         {'extend_existing': True, 'schema': SCHEMA},
     )
 
     # id = Column(BigInteger, autoincrement=True, primary_key=True)
-    name = Column(String, nullable=False, primary_key=True)
-    dob = Column(DateTime, nullable=False, )
-    type = Column(ANIMALS_TYPES_ENUM, nullable=False, default=AnimalsType.SHEEP)
+    email = Column(String, nullable=False, primary_key=True)
+    password = Column(String, nullable=False,)
+    # dob = Column(DateTime, nullable=False, )
+    # type = Column(ANIMALS_TYPES_ENUM, nullable=False, default=AnimalsType.SHEEP)
 
     created_at = Column(DateTime, default=datetime.now, nullable=False)
     updated_at = Column(DateTime, default=datetime.now, onupdate=func.now(), nullable=False)
 
-    @validates('name', )
-    def convert_to_upper(self, key, value):
+    @validates('email', )
+    def convert_to_lower(self, key, value):
         """Ensure the field is always uppercase."""
-        return value.upper()
+        return value.lower()
 
 
 
